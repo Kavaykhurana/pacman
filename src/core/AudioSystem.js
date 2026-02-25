@@ -10,24 +10,31 @@ export class AudioSystem {
     }
 
     _setupEvents() {
-        // Enable audio on first interaction
-        window.addEventListener('keydown', () => this._unlock(), { once: true });
-        window.addEventListener('touchstart', () => this._unlock(), { once: true });
+        // Enable audio on first interaction to bypass autoplay restrictions
+        const unlockEvents = ['keydown', 'touchstart', 'touchend', 'click', 'pointerup'];
+        
+        const unlock = () => {
+            if (!this.enabled) {
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume().then(() => {
+                        this.enabled = true;
+                        console.log("Audio unlocked.");
+                        unlockEvents.forEach(e => window.removeEventListener(e, unlock));
+                    }).catch(err => console.error("Audio unlock failed: ", err));
+                } else if (this.ctx.state === 'running') {
+                    this.enabled = true;
+                    unlockEvents.forEach(e => window.removeEventListener(e, unlock));
+                }
+            }
+        };
+
+        unlockEvents.forEach(e => window.addEventListener(e, unlock));
 
         EventBus.on('PLAY_SOUND', (name) => {
             if (this.enabled) {
                 this._playSynthPlaceholder(name);
             }
         });
-    }
-
-    _unlock() {
-        if (!this.enabled) {
-            this.ctx.resume().then(() => {
-                this.enabled = true;
-                console.log("Audio unlocked.");
-            });
-        }
     }
 
     // Temporary synth sounds until real assets are dropped in
