@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Pac-Man Ultimate</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- 224x288 is the original arcade resolution (28x36 tiles at 8x8) -->
+      <canvas id="game-canvas" width="224" height="288"></canvas>
+      <div id="ui-layer">
+        <!-- UI Overlays will be injected here -->
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

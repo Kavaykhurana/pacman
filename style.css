@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+:root {
+  --bg-color: #000;
+  --text-color: #fff;
+  --arcade-font: "Press Start 2P", monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #111;
+  color: var(--text-color);
+  font-family: var(--arcade-font);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  touch-action: none; /* Prevent scroll/zoom on mobile */
+}
+
+#game-container {
+  position: relative;
+  background-color: var(--bg-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+#game-canvas {
+  image-rendering: pixelated; /* Essential for crisp pixel art */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let clicks pass through to canvas if needed */
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
